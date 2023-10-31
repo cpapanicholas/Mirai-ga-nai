@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const inquirer = require('inquirer');
 
 class Database {
   constructor() {
@@ -25,6 +26,36 @@ class Database {
   }
 
   // Implement functions to perform specific SQL queries here
+  function addDepartment() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Enter the name of the department:',
+            },
+        ])
+        .then((answers) => {
+            // Call the corresponding database function to add the department.
+        });
+};
+
+function addEmployee() {
+  inquirer
+      .prompt([
+          {
+              type: 'input',
+              name: 'name',
+              message: 'Enter the name of the Employee:',
+          },
+      ])
+      .then((answers) => {
+          // Call the corresponding database function to add the department.
+      });
+}
+
+
+
 }
 
 module.exports = Database;
