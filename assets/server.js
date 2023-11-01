@@ -1,29 +1,29 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const inquirer = require('inquirer');
 
-class Database {
-  constructor() {
-    this.connection = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: 'root',
-      database: 'employeetrckr_db;'
-    });
-  }
+// class Database {
+//   constructor() {
+//     this.connection = mysql.createConnection({
+//       host: 'localhost',
+//       user: 'root',
+//       password: 'root',
+//       database: 'employeetrckr_db;'
+//     });
+//   }
 
-  connect() {
-    this.connection.connect((err) => {
-      if (err) throw err;
-      console.log('Connected to MySQL database');
-    });
-  }
+//   connect() {
+//     this.connection.connect((err) => {
+//       if (err) throw err;
+//       console.log('Connected to MySQL database');
+//     });
+//   }
 
-  disconnect() {
-    this.connection.end((err) => {
-      if (err) throw err;
-      console.log('Disconnected from MySQL database');
-    });
-  }
+//   disconnect() {
+//     this.connection.end((err) => {
+//       if (err) throw err;
+//       console.log('Disconnected from MySQL database');
+//     });
+//   }
 
   // Implement functions to perform specific SQL queries here
 
@@ -119,6 +119,7 @@ class Database {
         );
       });
   }
-}
+//}
+
 
 module.exports = Database;
