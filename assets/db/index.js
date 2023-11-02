@@ -4,7 +4,23 @@ class DB {
     constructor(connection) {
         this.connection = connection;
     }
+
+    findAllDepartments(){
+        return this.connection.promise().query(
+            "SELECT department.id, department.name FROM department"
+        )
+    }
+
+    findAllRoles(){
+
+    }
+
+    findAllEmployees(){
+
+    }
+
+    
 }
 
-// Find all employees
+module.exports = new DB(connection)
 

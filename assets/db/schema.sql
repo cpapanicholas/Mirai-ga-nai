@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS employeetrckr_db;
 
 CREATE DATABASE employeetrckr_db;
-
+USE employeetrckr_db;
 CREATE TABLE department (
   id INT PRIMARY KEY,
   name VARCHAR(30)
