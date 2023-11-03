@@ -1,12 +1,10 @@
 const db = require("./db")
 const inquirer = require('inquirer');
 
-
-
-
+startPrompt();
 // Implement functions to perform specific SQL queries here
 function startPrompt() {
-  prompt([
+  inquirer.prompt([
     {
       type: "list",
       message: "Choose a desired function",
@@ -15,7 +13,7 @@ function startPrompt() {
         'View all departments',
         'View all roles',
         'View all employees',
-        'Add a departments',
+        'Add a department',
         'Add a role',
         'Add an employee',
         'Update an employee role',
@@ -54,7 +52,7 @@ function startPrompt() {
 };
 
 // Query the database to get a list of departments and display them
-function viewAllDepartments() {
+function viewDepartments() {
   db.findAllDepartments()
     .then(([rows]) => {
       let departments = rows;
@@ -74,11 +72,15 @@ function addDepartment() {
     ])
     .then((answers) => {
       // Call the corresponding database function to add the department.
-      const query = 'INSERT INTO departments (name) VALUES (?)';
-      db.connection.query(query, [answers.name], (err, results) => {
-        if (err) throw err;
-        console.log(`Department ${answers.name} added.`);
-      });
+      let name = answers;
+      db.createDepartment(name)
+        .then(() => console.log(`Added ${name.name} to the database`))
+        .then(() => startPrompt())
+      // const query = 'INSERT INTO department (name) VALUES (?)';
+      // db.connection.query(query, [answers.name], (err, results) => {
+      //   if (err) throw err;
+      //   console.log(`Department ${answers.name} added.`);
+      // });
     });
 };
 
@@ -157,7 +159,7 @@ function addEmployee() {
     });
 };
 
-function viewAllEmployees() {
+function viewEmployees() {
   db.findAllEmployees()
     .then(([rows]) => {
       let employees = rows;
@@ -167,7 +169,7 @@ function viewAllEmployees() {
 
 };
 
-function viewAllRoles() {
+function viewRoles() {
   db.findAllRoles()
     .then(([rows]) => {
       let roles = rows;
