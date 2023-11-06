@@ -104,16 +104,32 @@ function addRole() {
         department_id: parseInt(answers.department_id), // Ensure department_id is a number
       };
 
-      // Insert the new role into the database
-      const query = 'INSERT INTO role SET ?';
-      db.connection.query(query, role, (err, result) => {
-        if (err) throw err;
+      if (isNaN(role.department_id)) {
+        console.log('Invalid department ID. Please enter a valid department ID.');
+        startPrompt();
+        return;
+      }
 
-        console.log(`Role "${answers.title}" added.`);
-        mainMenu(); // Return to the main menu
+      // Remove the 'id' field from the role object
+      delete role.id;
+
+      // Define the columns and values for the INSERT statement
+      const columns = Object.keys(role).join(', '); // Get column names
+      const values = Object.values(role); // Get values
+
+      // Insert the new role into the database
+      const query = `INSERT INTO role (${columns}) VALUES (?)`;
+      db.connection.query(query, [values], (err, result) => {
+        if (err) {
+          console.log('Error:', err);
+        } else {
+          console.log(`Role "${answers.title}" added.`);
+        }
+        startPrompt(); // Return to the main menu
       });
     });
-};
+}
+
 
 function addEmployee() {
   inquirer
