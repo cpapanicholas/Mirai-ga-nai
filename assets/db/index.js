@@ -19,7 +19,8 @@ class DB {
 
     createDepartment(name){
         return this.connection.promise().query(
-            "INSERT INTO department SET ?", name
+            "INSERT INTO department (name) VALUES (?)",
+            [name]
         );
     }
     findAllEmployees(){

@@ -1,7 +1,7 @@
-INSERT INTO department (id, name) VALUES
-(1, 'HR'),
-(2, 'Engineering'),
-(3, 'Marketing');
+INSERT INTO department (id, name, total_budget) VALUES
+(1, 'HR', 0.00),  
+(2, 'Engineering', 0.00),
+(3, 'Marketing', 0.00);
 
 INSERT INTO role (id, title, salary, department_id) VALUES
 (1, 'Manager', 80000, 1),

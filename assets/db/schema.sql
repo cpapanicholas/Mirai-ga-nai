@@ -5,8 +5,9 @@ CREATE DATABASE employeetrckr_db;
 USE employeetrckr_db;
 
 CREATE TABLE department (
-  id INT PRIMARY KEY,
-  name VARCHAR(30)
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30),
+  total_budget DECIMAL(10, 2) DEFAULT 0.00
 );
 
 CREATE TABLE role (

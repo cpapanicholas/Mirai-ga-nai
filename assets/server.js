@@ -72,15 +72,9 @@ function addDepartment() {
     ])
     .then((answers) => {
       // Call the corresponding database function to add the department.
-      let name = answers;
-      db.createDepartment(name)
-        .then(() => console.log(`Added ${name.name} to the database`))
-        .then(() => startPrompt())
-      // const query = 'INSERT INTO department (name) VALUES (?)';
-      // db.connection.query(query, [answers.name], (err, results) => {
-      //   if (err) throw err;
-      //   console.log(`Department ${answers.name} added.`);
-      // });
+      db.createDepartment(answers.name)
+        .then(() => console.log(`Added ${answers.name} to the database`))
+        .then(() => startPrompt());
     });
 };
 
