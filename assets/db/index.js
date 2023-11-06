@@ -22,11 +22,11 @@ class DB {
             "INSERT INTO department SET ?", name
         );
     }
-    // findAllEmployees(){
-    //     return this.connection.promise().query(
-
-
-    // }
+    findAllEmployees(){
+        return this.connection.promise().query(
+            "SELECT * FROM employee"
+        );
+    }
 
     
 }
