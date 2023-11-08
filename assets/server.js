@@ -149,21 +149,22 @@ function addEmployee() {
         name: 'role_id',
         message: 'Enter the role ID of the Employee:',
       },
-      {
-        type: 'input',
-        name: 'manager_id',
-        message: 'Enter the manager ID of the Employee (if any):',
-      },
+      // {
+      //   type: 'input',
+      //   name: 'manager_id',
+      //   message: 'Enter the manager ID of the Employee (if any):',
+      // },
     ])
     .then((answers) => {
       // Call the corresponding database function to add the employee.
-      const query = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+      const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
       db.connection.query(
         query,
         [answers.first_name, answers.last_name, answers.role_id, answers.manager_id],
         (err, results) => {
           if (err) throw err;
           console.log(`Employee ${answers.first_name} ${answers.last_name} added.`);
+          startPrompt();
         }
       );
     });
@@ -189,7 +190,49 @@ function viewRoles() {
 };
 
 function updateEmployeeRole() {
+  // Fetch a list of employees and roles to provide choices to the user.
+  Promise.all([db.findAllEmployees(), db.findAllRoles()])
+    .then(([employees, roles]) => {
+      const employeeChoices = employees[0].map((employee) => ({
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id,
+      }));
+      const roleChoices = roles[0].map((role) => ({
+        name: role.title,
+        value: role.id,
+      }));
 
+      inquirer
+        .prompt([
+          {
+            type: 'list',
+            name: 'employeeId',
+            message: 'Select the employee to update:',
+            choices: employeeChoices,
+          },
+          {
+            type: 'list',
+            name: 'roleId',
+            message: 'Select the new role for the employee:',
+            choices: roleChoices,
+          },
+        ])
+        .then((answers) => {
+          const employeeId = answers.employeeId;
+          const roleId = answers.roleId;
+
+          // Update the employee's role in the database.
+          db.updateEmployeeRole(employeeId, roleId)
+            .then(() => {
+              console.log('Employee role updated successfully.');
+              startPrompt(); // Return to the main menu
+            })
+            .catch((err) => {
+              console.error('Error updating employee role:', err);
+              startPrompt(); // Return to the main menu
+            });
+        });
+    });
 }
 
 

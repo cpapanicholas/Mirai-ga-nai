@@ -5,33 +5,35 @@ class DB {
         this.connection = connection;
     }
 
-    findAllDepartments(){
+    findAllDepartments() {
         return this.connection.promise().query(
             "SELECT department.id, department.name FROM department"
         )
     }
 
-    findAllRoles(){
+    findAllRoles() {
         return this.connection.promise().query(
             "SELECT role.id, role.title, department.name AS department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id"
         )
     }
 
-    createDepartment(name){
+    createDepartment(name) {
         return this.connection.promise().query(
             "INSERT INTO department (name) VALUES (?)",
             [name]
         );
     }
-    findAllEmployees(){
+    findAllEmployees() {
         return this.connection.promise().query(
             "SELECT * FROM employee"
         );
     }
- 
-
-    
+    updateEmployeeRole(employeeId, roleId) {
+        return this.connection.promise().query(
+            'UPDATE employees SET role_id = ? WHERE id = ?',
+            [roleId, employeeId]
+        );
+    }
 }
 
 module.exports = new DB(connection)
-
