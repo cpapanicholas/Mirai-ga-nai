@@ -192,8 +192,8 @@ function viewRoles() {
 function updateEmployeeRole() {
   // Fetch a list of employees and roles to provide choices to the user.
   Promise.all([db.findAllEmployees(), db.findAllRoles()])
-    .then(([employees, roles]) => {
-      const employeeChoices = employees[0].map((employee) => ({
+    .then(([employee, roles]) => {
+      const employeeChoices = employee[0].map((employee) => ({
         name: `${employee.first_name} ${employee.last_name}`,
         value: employee.id,
       }));
